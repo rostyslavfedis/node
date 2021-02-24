@@ -15,7 +15,7 @@ module.exports= {
     },
 
     findUserById: async (userId,preferL) => {
-        const buf = await readFile(dataBase);
+        const users = await readFile(dataBase);
         const user = JSON.parse(users.toString())[userId];
 
         if(!user) {
