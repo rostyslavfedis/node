@@ -53,4 +53,15 @@ module.exports={
                 res.status(400).json(e.message);
             }
         },
+    getUserByEmail: async (req, res) => {
+        try {
+            const { email } = req.params;
+            const user = await userService.findUserByEmail(email);
+
+            res.status(200).json(user);
+        }
+        catch (e) {
+            res.status(400).json(e.message);
+        }
+    },
 }

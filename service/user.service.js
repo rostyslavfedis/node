@@ -50,5 +50,17 @@ module.exports= {
         }
 
         return user;
+    },
+    findUserByEmail: async (email, preferL ) => {
+        const buf = await readFile(dataBase);
+        const DB = JSON.parse(buf.toString());
+
+        const user = DB.find(user => user.email === email);
+
+        if(!user) {
+            throw new Error(errorMessage.NOT_FOUND[preferL]);
+        }
+
+        return user;
     }
 }

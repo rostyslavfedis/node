@@ -12,6 +12,10 @@ router.post('/', userMiddleware.userIsValid, userMiddleware.PasswordIsValid, use
 
 router.delete('/:userId',userMiddleware.userIsValid, userController.deleteUser);
 
-router.get('/filter/:username',userMiddleware.userIsValid, userController.getUserByUsername);
+router.get('/filterByEmail/:email', userController.getUserByEmail);
+
+router.get('/filterByUsername/:username',userMiddleware.userIsValid, userController.getUserByUsername);
+
+
 
 module.exports = router;
