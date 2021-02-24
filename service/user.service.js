@@ -9,14 +9,14 @@ const writeFile = promisify(fs.writeFile);
 
 module.exports= {
     findUsers:async ()=>{
-        const buf = await readFile(dataBase);
+        const users = await readFile(dataBase);
 
-        return JSON.parse(buf.toString());
+        return JSON.parse(users.toString());
     },
 
     findUserById: async (userId,preferL) => {
         const buf = await readFile(dataBase);
-        const user = JSON.parse(buf.toString())[userId];
+        const user = JSON.parse(users.toString())[userId];
 
         if(!user) {
             throw new Error(errorMessage.NOT_FOUND[preferL]);
@@ -25,23 +25,23 @@ module.exports= {
     },
 
     createUser:async (userObject)=>{
-        const buf= await readFile(dataBase);
-        const DB = JSON.parse(buf.toString());
+        const users= await readFile(dataBase);
+        const DB = JSON.parse(users.toString());
 
         DB.push(userObject);
 
         await writeFile(dataBase, JSON.stringify(DB));
     },
     deleteUser:async (userId)=>{
-        const buf = await readFile(dataBase);
-        const DB = JSON.parse(buf.toString());
+        const users = await readFile(dataBase);
+        const DB = JSON.parse(users.toString());
 
         DB.splice(userId, 1);
         await writeFile(dataBase, JSON.stringify(DB));
     },
     findUserByUsername: async (username, preferL ) => {
-        const buf = await readFile(dataBase);
-        const DB = JSON.parse(buf.toString());
+        const users = await readFile(dataBase);
+        const DB = JSON.parse(users.toString());
 
         const user = DB.find(user => user.username === username);
 
@@ -52,8 +52,8 @@ module.exports= {
         return user;
     },
     findUserByEmail: async (email, preferL ) => {
-        const buf = await readFile(dataBase);
-        const DB = JSON.parse(buf.toString());
+        const users = await readFile(dataBase);
+        const DB = JSON.parse(users.toString());
 
         const user = DB.find(user => user.email === email);
 

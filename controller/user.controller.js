@@ -1,4 +1,5 @@
 const userService = require('../service/user.service')
+const errorCodes = require('../constant/errorCodes.enum')
 
 module.exports={
     getAllUsers: async (req,res)=>{
@@ -6,7 +7,7 @@ module.exports={
             const users = await userService.findUsers()
             res.json(users);
         }catch (e) {
-            res.status(400).json(e.message);
+            res.status(errorCodes.BAD_REQUEST).json(e.message);
         }
     },
     getSingleUser: async (req,res)=>{
@@ -16,7 +17,7 @@ module.exports={
 
             res.json(user)
         }catch (e) {
-         res.status(400).json(e.message)
+         res.status(errorCodes.BAD_REQUEST).json(e.message)
         }
 
     },
@@ -39,7 +40,7 @@ module.exports={
             res.status(200).json('User is deleted');
         }
         catch (e) {
-            res.status(400).json(e.message);
+            res.status(errorCodes.BAD_REQUEST).json(e.message);
         }
         },
     getUserByUsername: async (req, res) => {
@@ -50,7 +51,7 @@ module.exports={
                 res.status(200).json(user);
             }
             catch (e) {
-                res.status(400).json(e.message);
+                res.status(errorCodes.BAD_REQUEST).json(e.message);
             }
         },
     getUserByEmail: async (req, res) => {
@@ -61,7 +62,7 @@ module.exports={
             res.status(200).json(user);
         }
         catch (e) {
-            res.status(400).json(e.message);
+            res.status(errorCodes.BAD_REQUEST).json(e.message);
         }
     },
 }
