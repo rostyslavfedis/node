@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const { constants } = require('../../constant');
 
 // eslint-disable-next-line no-unused-vars
 const ownerSubScheme = {
@@ -26,4 +27,4 @@ carScheme.pre('find', function() {
     this.populate('carOwners');
 });
 
-module.exports = model('Cars', carScheme);
+module.exports = model(constants.CAR, carScheme);

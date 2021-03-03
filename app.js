@@ -3,6 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 
 const apiRouter = require('./router/api.router');
+const { config } = require('./config');
 
 const app = express();
 _conectDB();
@@ -14,12 +15,12 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 app.use('/', apiRouter);
 
-app.listen(5000, () => {
-    console.log('App 5000 in progress');
+app.listen(config.PORT, () => {
+    console.log(`App ${config.PORT} in progress`);
 });
 
 function _conectDB() {
-    mongoose.connect('mongodb://localhost:27017/OWU', { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect(config.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
     const { connection } = mongoose;
     connection.on('error', (error) => {

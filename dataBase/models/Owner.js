@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const { constants } = require('../../constant');
 
 const ownerScheme = new Schema({
     firstName: { type: String, required: true },
@@ -6,4 +7,4 @@ const ownerScheme = new Schema({
     yearBirthday: { type: Number, default: 2001 }
 });
 
-module.exports = model('Owner', ownerScheme);
+module.exports = model(constants.OWNER, ownerScheme);

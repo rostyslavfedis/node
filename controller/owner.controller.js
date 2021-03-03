@@ -1,32 +1,37 @@
-const ownerService = require('../service/owner.service');
-const errorCodes = require('../constant/errorCodes.enum');
+const { userService } = require('../service');
+const { errorCodes } = require('../constant');
+const { passwordsHasher } = require('../helper');
 
 module.exports = {
-    findAll: async (req, res) => {
+    getAllUsers: async (req, res) => {
         try {
-            const all = await ownerService.findAllOwners();
-            res.json(all);
+            const allUsers = await userService.findUsers();
+            res.json(allUsers);
         } catch (e) {
-            res.status(errorCodes.BAD_REQUEST).json(e.message);
+            res.status(errorCodes.BAD_REQUEST).json.message(e);
         }
     },
 
-    findById: async (req, res) => {
+    getSingleUser: async (req, res) => {
         try {
-            const ownerID = req.params.id;
-            const owner = await ownerService.findOwnerById(ownerID);
-            res.json(owner);
+            const userId = req.params.id;
+            const user = await userService.findUserById(userId);
+
+            res.json(user);
         } catch (e) {
-            res.status(errorCodes.BAD_REQUEST).json(e.message);
+            res.json(e.message);
         }
     },
 
-    createOw: async (req, res) => {
+    createUser: async (req, res) => {
         try {
-            await ownerService.createOwner(req.body);
-            res.json('Owner Created');
+            const { password } = req.body;
+            const hashPassword = await passwordsHasher.hash(password);
+            await userService.createUser({ ...req.body, password: hashPassword });
+
+            res.status(201).json('User was Created');
         } catch (e) {
-            res.status(errorCodes.BAD_REQUEST).json(e.message);
+            res.json(e);
         }
     }
 };

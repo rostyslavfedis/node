@@ -4,7 +4,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-handlebars": "^5.2.1",
-    "mongoose": "^5.11.18"
+    "mongoose": "^5.11.18",
+    "bcrypt": "^5.0.1",
+    "joi": "^17.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.6",

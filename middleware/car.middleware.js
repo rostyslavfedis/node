@@ -1,5 +1,5 @@
-const errorCodes = require('../constant/errorCodes.enum');
-const errorMessages = require('../error/error.messages');
+const { errorCodes } = require('../constant');
+const { errorMessages } = require('../error');
 const { findCarByID } = require('../service/car.service');
 
 module.exports = {
