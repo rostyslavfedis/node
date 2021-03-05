@@ -21,7 +21,7 @@ module.exports = {
 
     USER_ALREADY_EXISTED: {
         en: 'User already existed',
-        ua: 'Ім*я користувача занято'
+        ua: 'Ім*я користувача зайнято'
     },
 
     USER_IS_CREATED: {
