@@ -1,11 +1,14 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
 const apiRouter = require('./router/api.router');
 const { config } = require('./config');
 
 const app = express();
+
+dotenv.config();
 _conectDB();
 
 app.use(express.json());

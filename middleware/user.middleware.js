@@ -1,18 +1,15 @@
-const errorCodes = require('../constant/errorCodes.enum');
-const errorMessages = require('../error/error.messages');
-const { findUserById } = require('../service/user.service');
+const { errorCodes } = require('../constant');
+const { User } = require('../dataBase/models');
+const { userValidators } = require('../validators');
 
 module.exports = {
-    ifUserExists: async (req, res, next) => {
+    isUserValid: (req, res, next) => {
         try {
-            const { language = 'ua' } = req.body;
-            const { userId } = req.params;
-            const foundUser = await findUserById(+userId);
-            if (!foundUser) {
-                throw new Error(errorMessages.USER_NOT_FOUND[language]);
-            }
+            const { error } = userValidators.createUserValidator.validate(req.body);
 
-            req.user = foundUser;
+            if (error) {
+                throw new Error(error.details[0].message);
+            }
 
             next();
         } catch (e) {
@@ -20,21 +17,33 @@ module.exports = {
         }
     },
 
-    isUserValid: (req, res, next) => {
+    isEmailCreated: async (req, res, next) => {
         try {
-            const { name, password, language = 'en' } = req.body;
+            const { email } = req.body;
 
-            if (!name || !password) {
-                throw new Error(errorMessages.SOME_FIELD_IS_EMPTY[language]);
-            }
-
-            if (password.length < 6) {
-                throw new Error(errorMessages.TOO_SMALL_PASSWORD[language]);
+            const user = await User.findOne({ email });
+            if (user) {
+                throw new Error('Email already exist');
             }
 
             next();
         } catch (e) {
-            res.status(errorCodes.BAD_REQUEST).json(e.message);
+            res.json(e.message);
+        }
+    },
+
+    isLoginExisted: async (req, res, next) => {
+        try {
+            const { name } = req.body;
+
+            const user = await User.findOne({ name });
+            if (user) {
+                throw new Error(`Name: ${name} already exist`);
+            }
+
+            next();
+        } catch (e) {
+            res.json(e.message);
         }
     }
 };

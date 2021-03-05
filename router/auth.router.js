@@ -1,20 +1,10 @@
 const router = require('express').Router();
 
-const { User } = require('../dataBase/models');
-const { passwordsHasher } = require('../helper');
+const { authController } = require('../controller');
 
-router.post('/', async (req, res) => {
-    const { email, password } = req.body;
+// eslint-disable-next-line no-unused-vars
+const { authMiddleware } = require('../middleware');
 
-    const user = await User.findOne({ email });
-
-    if (!user) {
-        throw new Error('NO FOUND');
-    }
-
-    passwordsHasher.compare(password, user.password);
-
-    res.json('OK');
-});
+router.post('/', authController.authController);
 
 module.exports = router;
